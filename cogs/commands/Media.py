@@ -16,6 +16,7 @@ class Media (commands .Cog ):
     def __init__ (self ,client ):
         self .client =client 
         self .infractions =defaultdict (list )
+        self .client .loop .create_task (self .set_db ())
 
 
     async def set_db (self ):
@@ -35,9 +36,6 @@ class Media (commands .Cog ):
             ''')
             await db .commit ()
 
-    @commands .Cog .listener ()
-    async def on_ready (self ):
-        await self .set_db ()
 
     @commands .hybrid_group (name ="media",help ="Setup Media channel, Media channel will not allow users to send messages other than media files.",invoke_without_command =True )
     @blacklist_check ()
